@@ -131,3 +131,9 @@ class Tasks:
 
     def get_score(self):
         return np.sum([_task._points for _task in self.tasks])
+
+    def get_fulfilled(self):
+        return np.array([_task._fulfilled for _task in self.tasks])
+
+    def get_numbers_score(self):
+        return np.sum([_task._points for _task in self.tasks[:6]])
