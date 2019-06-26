@@ -1,13 +1,6 @@
 import numpy as np
 
 
-nturns = 13
-p = np.ones(6) / 6
-
-
-TASKS = []
-
-
 class task(object):
     """Baseclass for individual tasks."""
 
@@ -34,12 +27,11 @@ class task(object):
 class Numbers(task):
 
     def __init__(self, n):
-        super.__init__(self, "numbers_%i" % n)
+        super(Numbers, self).__init__("numbers_%i" % n)
         self.n = n
 
     def points(self, dice):
-        return self.n * np.sum(dice == self.n)
-
+        return self.n * np.sum(np.array(dice) == self.n)
 
 
 class XOfAKind(task):
@@ -47,12 +39,11 @@ class XOfAKind(task):
     def __init__(self, n):
         self._required = n
         if n == 3:
-            super.__init__(self, "ThreeOfAKind")
+            super(XOfAKind, self).__init__("ThreeOfAKind")
         elif n == 4:
-            super.__init__(self, "FourOfAKind")
+            super(XOfAKind, self).__init__("FourOfAKind")
         else:
             raise ValueError("Only three or four of a kind exist.")
-
 
     def points(self, dice):
         for number in range(1, 7, 1):
@@ -61,11 +52,11 @@ class XOfAKind(task):
             else:
                 return 0
 
+
 class FullHouse(task):
 
     def __init__(self):
         super.__init__(self, "FullHouse")
-
 
     def points(self, dice):
         three = False
@@ -87,7 +78,7 @@ class SmallStreet(task):
         super.__init(self, "SmallStreet")
 
     def points(self, dice):
-        dices = np.sort(dices)
+        dices = np.unique(np.sort(dice))
         if np.sum(dices[:-1] + 1 == dices[1:]) >= 3:
             return 30
         return 0
@@ -99,7 +90,7 @@ class BigStreet(task):
         super.__init(self, "BigStreet")
 
     def points(self, dice):
-        dices = np.sort(dices)
+        dices = np.unique(np.sort(dice))
         if np.sum(dices[:-1] + 1 == dices[1:]) >= 4:
             return 40
         return 0
@@ -116,10 +107,6 @@ class Kniffel(task):
         return 0
 
 
-def roll_dices(n):
-    return np.random.choice(6, size=n, p=p)
-
-
 class Chance(task):
 
     def __init__(self):
@@ -129,4 +116,18 @@ class Chance(task):
         return np.sum(dice)
 
 
-for i in range(nturns):
+class Tasks:
+
+    def __init__(self):
+        self.score = 0
+        self.tasks = [Numbers(i) for i in np.arange(1, 7, 1)]
+        self.tasks += SmallStreet()
+        self.tasks += BigStreet()
+        self.tasks += FullHouse()
+        self.tasks += XOfAKind(3)
+        self.tasks += XOfAKind(4)
+        self.tasks += Kniffel()
+        self.tasks += Chance()
+
+    def get_score(self):
+        return np.sum([_task._points for _task in self.tasks])
