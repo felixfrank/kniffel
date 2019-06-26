@@ -5,7 +5,7 @@ p = np.ones(6) / 6
 
 
 def roll_dices(n):
-    return np.random.choice(6, size=n, p=p)
+    return 1 + np.random.choice(6, size=n, p=p)
 
 
 if __name__ == '__main__':

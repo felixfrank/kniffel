@@ -46,6 +46,7 @@ class XOfAKind(task):
             raise ValueError("Only three or four of a kind exist.")
 
     def points(self, dice):
+        dice = np.array(dice)
         for number in range(1, 7, 1):
             if np.sum(dice == number) >= self._required:
                 return np.sum(dice)
@@ -55,7 +56,7 @@ class XOfAKind(task):
 class FullHouse(task):
 
     def __init__(self):
-        super.__init__(self, "FullHouse")
+        super(FullHouse, self).__init__("FullHouse")
 
     def points(self, dice):
         three = False
@@ -74,7 +75,7 @@ class FullHouse(task):
 class SmallStreet(task):
 
     def __init__(self):
-        super.__init(self, "SmallStreet")
+        super(SmallStreet, self).__init__("SmallStreet")
 
     def points(self, dice):
         dices = np.unique(np.sort(dice))
@@ -86,7 +87,7 @@ class SmallStreet(task):
 class BigStreet(task):
 
     def __init__(self):
-        super.__init(self, "BigStreet")
+        super(BigStreet, self).__init__("BigStreet")
 
     def points(self, dice):
         dices = np.unique(np.sort(dice))
@@ -98,7 +99,7 @@ class BigStreet(task):
 class Kniffel(task):
 
     def __init__(self):
-        super.__init__(self, "Kniffel")
+        super(Kniffel, self).__init__("Kniffel")
 
     def points(self, dice):
         if len(np.unique(dice)) == 1:
@@ -109,7 +110,7 @@ class Kniffel(task):
 class Chance(task):
 
     def __init__(self):
-        super.__init__(self, "Chance")
+        super(Chance, self).__init__("Chance")
 
     def points(self, dice):
         return np.sum(dice)
