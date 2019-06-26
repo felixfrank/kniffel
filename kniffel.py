@@ -49,8 +49,7 @@ class XOfAKind(task):
         for number in range(1, 7, 1):
             if np.sum(dice == number) >= self._required:
                 return np.sum(dice)
-            else:
-                return 0
+        return 0
 
 
 class FullHouse(task):
