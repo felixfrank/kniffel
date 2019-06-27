@@ -59,15 +59,10 @@ class FullHouse(task):
         super(FullHouse, self).__init__("FullHouse")
 
     def points(self, dice):
-        pair, three = False, False
-        for number in range(1, 7, 1):
-            c = np.sum(np.array(dice) == number)
-            if c == 3:
-                three = True
-            elif c == 2:
-                pair = True
-        if three and pair:
-            return 25
+        if len(np.unique(dice)) == 2:
+            c = np.sum(np.array(dice) == dice[0])
+            if (c >= 2) and (c <= 3):
+                return 25
         return 0
 
 
