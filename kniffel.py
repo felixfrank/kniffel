@@ -59,17 +59,16 @@ class FullHouse(task):
         super(FullHouse, self).__init__("FullHouse")
 
     def points(self, dice):
-        three = False
-        pair = False
+        pair, three = False, False
         for number in range(1, 7, 1):
-            if np.sum(dice == number) == 3:
+            c = np.sum(np.array(dice) == number)
+            if c == 3:
                 three = True
-            elif np.sum(dice == number) == 2:
+            elif c == 2:
                 pair = True
         if three and pair:
             return 25
-        else:
-            return 0
+        return 0
 
 
 class SmallStreet(task):

@@ -66,6 +66,32 @@ class TestScores(unittest.TestCase):
         self.assertTrue(task.points([6, 6, 6, 4, 6]) == 28)
         self.assertTrue(task.points([6, 3, 6, 4, 1]) == 0)
 
+        task = kniffel.XOfAKind(4)
+        self.assertTrue(task.points([1, 2, 3, 4, 5]) == 0)
+        self.assertTrue(task.points([1, 1, 3, 4, 5]) == 0)
+        self.assertTrue(task.points([1, 1, 1, 4, 5]) == 0)
+        self.assertTrue(task.points([6, 1, 6, 4, 6]) == 0)
+        self.assertTrue(task.points([6, 6, 6, 4, 6]) == 28)
+        self.assertTrue(task.points([6, 3, 6, 4, 1]) == 0)
+        self.assertTrue(task.points([2, 1, 2, 2, 2]) == 9)
+
+    def test_05_full_house(self):
+
+        task = kniffel.FullHouse()
+        self.assertTrue(task.points([2, 3, 3, 3, 4]) == 0)
+        self.assertTrue(task.points([2, 3, 3, 3, 2]) == 25)
+        self.assertTrue(task.points([2, 3, 2, 3, 2]) == 25)
+        self.assertTrue(task.points([2, 2, 2, 3, 2]) == 0)
+        self.assertTrue(task.points([4, 4, 4, 4, 4]) == 0)
+        self.assertTrue(task.points([1, 2, 3, 4, 5]) == 0)
+
+    def test_06_chance(self):
+
+        task = kniffel.Chance()
+        for i in range(100):
+            dice = game.roll_dices(5)
+            self.assertTrue(task.points(dice) == dice.sum())
+
 
 if __name__ == '__main__':
     unittest.main()
